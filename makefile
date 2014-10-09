@@ -3,3 +3,4 @@ all: linked_list.c song.c tunez.c
 
 clean:
 	rm -f *.o
+
