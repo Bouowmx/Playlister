@@ -45,13 +45,13 @@ bool linked_list_contains(linked_list * list, song * data) {
 
 void print_list(linked_list * list) {
 	printf("[");
-	if (!list) {
+	if (!(list->first)) {
 		printf("]\n");
 		return;
 	}
 	node * current_node;
 	for (current_node = list->first; current_node; current_node = current_node->next) {
-		printf("[Artist: %s, Title: %s]", current_node->data->artist, current_node->data->title); //Type-specific
+		printf("[Title: %s, Artist: %s]", current_node->data->title, current_node->data->artist); //Type-specific
 		if (current_node->next) {printf(", ");}
 		else {printf("]\n");}
 	}
