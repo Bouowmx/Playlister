@@ -65,3 +65,4 @@ void linked_list_print(linked_list * list) {
 	linked_list_print(list);
 	return EXIT_SUCCESS;
 }*/
+

@@ -17,3 +17,4 @@ int main() {
 	printf("%lu\n", sizeof(wchar_t));*/
     return EXIT_SUCCESS;
 }
+
