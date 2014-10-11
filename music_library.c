@@ -15,6 +15,14 @@ music_library * music_library_new() {
 
 unsigned char character(unsigned char i) {return i + 'A';}
 
+void music_library_print(music_library * library) {
+	unsigned char i;
+	for (i = 0; i < 26; i++) {
+		printf("%c: ", character(i));
+		linked_list_print(library->library[i]);
+	}
+}
+
 char ord(char c) { //This is like Python's ord, which takes a character and returns its ASCII value. Here, it maps A-Z and a-z to [0-25].
 	if ((c >= 'A') && (c <= 'Z')) {return c - 'A';}
 	else if ((c >= 'a') && (c <= 'z')) {return c - 'a';}
@@ -22,16 +30,10 @@ char ord(char c) { //This is like Python's ord, which takes a character and retu
 }
 
 int main() {
+	printf("Success.\n");
 	music_library * library = music_library_new();
-	for (i = 0; i < 26; i++) {
-		printf("%c: ", character(i));
-		print_list(music_library[i]);
-	}
+	music_library_print(library);
 	
-	/*linked_list * l = linked_list_new();
-	song * s = song_new("Marisa Stole the Precious Thing", "IOSYS");
-	linked_list_add(l, s);
-	print_list(l);*/
 	return EXIT_SUCCESS;
 }
 

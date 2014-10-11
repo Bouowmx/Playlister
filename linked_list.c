@@ -4,17 +4,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct linked_list;
-struct node;
+typedef struct linked_list linked_list;
+typedef struct node node;
 
 typedef struct linked_list {
-	struct node * first;
-	struct node * last;
+	node * first;
+	node * last;
 } linked_list;
 
 typedef struct node {
 	song * data; //Type-specific
-	struct node * next;
+	node * next;
 } node;
 
 linked_list * linked_list_new() {
@@ -43,7 +43,7 @@ bool linked_list_contains(linked_list * list, song * data) {
 	return false;
 }
 
-void print_list(linked_list * list) {
+void linked_list_print(linked_list * list) {
 	printf("[");
 	if (!(list->first)) {
 		printf("]\n");
