@@ -5,11 +5,9 @@
 typedef struct music_library {linked_list * library[26];} music_library;
 
 music_library * music_library_new() {
-	linked_list * library_list[26];
 	unsigned char i;
-	for (i = 0; i < 26; i++) {library_list[i] = linked_list_new();}
 	music_library * library = (music_library *) malloc(sizeof(music_library));
-	library->library = library_list;
+	for (i = 0; i < 26; i++) {library->library[i] = linked_list_new();}
 	return library;
 }
 
