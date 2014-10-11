@@ -24,7 +24,7 @@ linked_list * linked_list_new() {
 	return list;
 }
 
-void linked_list_add(linked_list * list, song * data) {
+void linked_list_add(linked_list * list, song * data) { //Type-specific
 	node * new_node = (node *) malloc(sizeof(node));
 	new_node->data = data;
 	new_node->next = NULL;
@@ -37,9 +37,9 @@ void linked_list_add(linked_list * list, song * data) {
 	list->last = new_node;
 }
 
-bool linked_list_contains(linked_list * list, song * data) {
+bool linked_list_contains(linked_list * list, song * data) { //Type-specific
 	node * current_node;
-	for (current_node = list->first; current_node; current_node = current_node->next) {if (!(strcmp(current_node->data->artist, data->artist)) && !(strcmp(current_node->data->title, data->title))) {return true;}}
+	for (current_node = list->first; current_node; current_node = current_node->next) {if (!(strcmp(current_node->data->album, data->album)) && !(strcmp(current_node->data->artist, data->artist)) && !(strcmp(current_node->data->title, data->title))) {return true;}}
 	return false;
 }
 
@@ -51,9 +51,17 @@ void linked_list_print(linked_list * list) {
 	}
 	node * current_node;
 	for (current_node = list->first; current_node; current_node = current_node->next) {
-		printf("[Title: %s, Artist: %s]", current_node->data->title, current_node->data->artist); //Type-specific
+		song_print(current_node->data); //Type-specific
 		if (current_node->next) {printf(", ");}
 		else {printf("]\n");}
 	}
 }
 
+/*int main() {
+	linked_list * list = linked_list_new();
+	
+	linked_list_add(list, song_new("Bad Apple!!", "Alstroemeria Records", "EXSERENS"));
+	linked_list_add(list, song_new("Bad Apple!!", "Alstroemeria Records", "EXSERENS"));
+	linked_list_print(list);
+	return EXIT_SUCCESS;
+}*/
