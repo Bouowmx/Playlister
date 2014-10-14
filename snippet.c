@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <string.h>
 
 void linked_list_add_sorted(linked_list * list, song * data) {
@@ -24,4 +25,10 @@ void linked_list_remove(linked_list * list, song * data) {
 	for (current_node = previous_node = list->first; current_node; current_node = current_node->next) {
 		if (current_node != list->first) {previous_node = previous_node->next;}
 		if (!(strcmp(data->album, current_node->data->album)) && !(strcmp(data->artist, current_node->data->artist)) && !(strcmp(data->title, current_node->data->title))) {
-			
+			previous_node->next = current_node->next;
+			free(current_node);
+			return;
+		}
+	}
+}
+
