@@ -1,34 +1,11 @@
-#include "song.c"
-#include <stdbool.h>
+#include "linked_list.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct linked_list linked_list;
-typedef struct node node;
-
-typedef struct linked_list {
-	node * first;
-	node * last;
-} linked_list;
-
-typedef struct node {
-	song * data;
-	node * next;
-} node;
-
-linked_list * linked_list_new();
-void linked_list_add(linked_list *, song *);
-void linked_list_add_index(linked_list *, song *, size_t);
-bool linked_list_contains(linked_list *, song *);
-song * linked_list_get(linked_list *, size_t);
-size_t linked_list_length(linked_list *);
-void linked_list_print(linked_list *);
-
 linked_list * linked_list_new() {
 	linked_list * list = (linked_list *) malloc(sizeof(linked_list));
 	list->first = NULL;
-	list->last = NULL;
 	return list;
 }
 
@@ -36,17 +13,34 @@ void linked_list_add(linked_list * list, song * data) {
 	node * new_node = (node *) malloc(sizeof(node));
 	new_node->data = data;
 	new_node->next = NULL;
-	if (!(list->last)) {
+	if (linked_list_is_empty(list)) {
 		list->first = new_node;
-		list->last = new_node;
 		return;
 	}
-	list->last->next = new_node;
-	list->last = new_node;
+	node * current_node;
+	for (current_node = list->first; current_node->next; current_node = current_node->next) {}
+	current_node->next = new_node;
 }
 
-void linked_list_add_index(linked_list * list, song * data, size_t index) {
-	
+void linked_list_add_sorted(linked_list * list, song * data) {
+	node * new_node = (node *) malloc(sizeof(node));
+	new_node->data = data;
+	new_node->next = NULL;
+	node * current_node;
+	if (linked_list_is_empty(list)) {
+		list->first = new_node;
+		return;
+	}
+	for (current_node = list->first; current_node; current_node = current_node->next) {
+		if (strcmp(data->title, current_node->data->title) >= 0) {
+			new_node->next = current_node->next;
+			current_node->next = new_node;
+			return;
+		}
+	}
+	//If the above is not run, then the song to add will go first.
+	new_node->next = list->first;
+	list->first = new_node;
 }
 
 bool linked_list_contains(linked_list * list, song * data) {
@@ -61,6 +55,8 @@ song * linked_list_get(linked_list * list, size_t index) {
 	for (; !index; index--) {current_node = current_node->next;}
 	return current_node->data;
 }
+
+bool linked_list_is_empty(linked_list * list) {return !(list->first);}
 
 size_t linked_list_length(linked_list * list) {
 	size_t i = 0;
@@ -83,12 +79,16 @@ void linked_list_print(linked_list * list) {
 	}
 }
 
-/*int main() {
-	linked_list * list = linked_list_new();
-	
-	linked_list_add(list, song_new("Bad Apple!!", "Alstroemeria Records", "EXSERENS"));
-	linked_list_add(list, song_new("Bad Apple!!", "Alstroemeria Records", "EXSERENS"));
-	linked_list_print(list);
-	return EXIT_SUCCESS;
-}*/
+void linked_list_remove(linked_list * list, song * data) {
+	node * current_node;
+	node * previous_node;
+	for (current_node = previous_node = list->first; current_node; current_node = current_node->next) {
+		if (current_node != list->first) {previous_node = previous_node->next;}
+		if (!(strcmp(data->album, current_node->data->album)) && !(strcmp(data->artist, current_node->data->artist)) && !(strcmp(data->title, current_node->data->title))) {
+			previous_node->next = current_node->next;
+			free(current_node);
+			return;
+		}
+	}
+}
 

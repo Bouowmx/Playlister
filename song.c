@@ -11,11 +11,11 @@ typedef struct song {
 
 song * song_new(char * title, char * artist, char * album) {
 	song * new_song = (song *) malloc(sizeof(song));
-	new_song->album = (char *) malloc(strlen(album) + 1);
+	new_song->album = (char *) malloc((strlen(album) + 1) * sizeof(char));
 	strcpy(new_song->album, album);
-	new_song->artist = (char *) malloc(strlen(artist) + 1);
+	new_song->artist = (char *) malloc((strlen(artist) + 1) * sizeof(char));
 	strcpy(new_song->artist, artist);
-	new_song->title = (char *) malloc(strlen(title) + 1);
+	new_song->title = (char *) malloc((strlen(title) + 1) * sizeof(char));
 	strcpy(new_song->title, title);
 	return new_song;
 }
@@ -35,10 +35,4 @@ void song_print(song * s) {
 	strcat(song_info, s->album);
 	return song_info;*/
 }
-
-/*int main() {
-	song * s = song_new("Bad Apple!!", "Alstroemeria Records", "EXSERENS");
-	song_print(s);
-	return EXIT_SUCCESS;
-}*/
 
